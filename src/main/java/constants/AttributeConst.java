@@ -44,7 +44,7 @@ public enum AttributeConst {
     //退勤管理
     ATTENDANCE("attendance"),
     ATTENDANCES("attendances"),
-    ATT_COUNT("reports_count"),
+    ATT_COUNT("attendances_count"),
     ATT_ID("id"),
     ATT_DATE("time_in"),
     ATT_TITLE("time_out"),

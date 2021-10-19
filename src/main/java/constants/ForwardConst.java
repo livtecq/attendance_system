@@ -35,8 +35,8 @@ public enum ForwardConst {
     FW_EMP_SHOW("employees/show"),
     FW_EMP_NEW("employees/new"),
     FW_EMP_EDIT("employees/edit"),
-    FW_REP_INDEX("attendances/index"),
-    FW_REP_EDIT("attendances/edit");
+    FW_ATT_INDEX("attendances/index"),
+    FW_ATT_EDIT("attendances/edit");
 
     /**
      * 文字列
