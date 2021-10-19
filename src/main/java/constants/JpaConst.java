@@ -31,7 +31,7 @@ public interface JpaConst {
 
     //勤怠テーブル
     String TABLE_ATT = "attendances"; //テーブル名
-    //日報テーブルカラム
+    //勤怠テーブルカラム
     String ATT_COL_ID = "id"; //id
     String ATT_COL_EMP = "employee_id"; //勤怠を作成した従業員のid
     String ATT_COL_ATT_DATE = "attendance_date"; //いつの勤怠かを示す日付
