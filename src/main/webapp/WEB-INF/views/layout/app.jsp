@@ -40,7 +40,7 @@
             </c:if>
         </div>
         <div id="content">${param.content}</div>
-        <div id="footer">＆copy; 2021 kintai Co.,Ltd. All Rights Reserved.</div>
+        <div id="footer">© 2021 kintai Co.,Ltd. All Rights Reserved.</div>
     </div>
 </body>
 </html>
