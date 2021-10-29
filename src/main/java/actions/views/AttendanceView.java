@@ -2,6 +2,7 @@ package actions.views;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,17 +42,12 @@ public class AttendanceView {
     /**
      * 出勤時間
      */
-    private String timeIn;
+    private LocalTime timeIn;
 
     /**
      * 退勤時間
      */
-    private String timeOut;
-
-    /**
-     * コメント
-     */
-    private String content;
+    private LocalTime timeOut;
 
     /**
      * 登録日時
