@@ -2,6 +2,7 @@ package models;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -66,35 +66,27 @@ public class Attendance {
     /**
      * いつの勤怠かを示す日付
      */
-    @Column(name = JpaConst.ATT_COL_ATT_DATE, nullable = false)
+    @Column(name = JpaConst.ATT_COL_ATT_DATE, nullable = true)
     private LocalDate attendanceDate;
 
     /**
      * 体温記録
      */
-    @Column(name = JpaConst.ATT_COL_BODY_TEMPERATURE, nullable = false)
+    @Column(name = JpaConst.ATT_COL_BODY_TEMPERATURE, nullable = true)
     private String bodyTemperature;
 
     /**
      * 出勤時間
      */
-    @Lob
     @Column(name = JpaConst.ATT_COL_TIME_IN, nullable = false)
-    private String timeIn;
+    private LocalTime timeIn;
 
     /**
      * 退勤時間
      */
-    @Lob
-    @Column(name = JpaConst.ATT_COL_TIME_OUT, nullable = false)
-    private String timeOut;
+    @Column(name = JpaConst.ATT_COL_TIME_OUT, nullable = true)
+    private LocalTime timeOut;
 
-    /**
-     * コメント
-     */
-    @Lob
-    @Column(name = JpaConst.ATT_COL_COMMENT, nullable = false)
-    private String content;
 
     /**
      * 登録日時
