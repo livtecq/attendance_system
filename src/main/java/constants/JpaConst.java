@@ -38,7 +38,6 @@ public interface JpaConst {
     String ATT_COL_BODY_TEMPERATURE ="body_temperature"; //体温記録
     String ATT_COL_TIME_IN = "time_in"; //出勤時間
     String ATT_COL_TIME_OUT = "time_out"; //退勤時間
-    String ATT_COL_COMMENT = "comment"; //コメント
     String ATT_COL_CREATED_AT = "created_at"; //登録日時
     String ATT_COL_UPDATED_AT = "updated_at"; //更新日時
 
@@ -50,6 +49,7 @@ public interface JpaConst {
     String JPQL_PARM_CODE = "code"; //社員番号
     String JPQL_PARM_PASSWORD = "password"; //パスワード
     String JPQL_PARM_EMPLOYEE = "employee"; //従業員
+    String JPQL_PARM_DATE = "attendance_date"; //日付
 
     //NamedQueryの nameとquery
     //全ての従業員をidの降順に取得する
@@ -76,5 +76,8 @@ public interface JpaConst {
     //指定した従業員が作成した勤怠の件数を取得する
     String Q_ATT_COUNT_ALL_MINE = ENTITY_ATT + ".countAllMine";
     String Q_ATT_COUNT_ALL_MINE_DEF = "SELECT COUNT(a) FROM Attendance AS a WHERE a.employee = :" + JPQL_PARM_EMPLOYEE;
+    //勤怠を現在の日付を条件に取得する。
+    String Q_ATT_GET_DATE = ENTITY_ATT + ".getALLdate";
+    String Q_ATT_GET_DATE_DEF = "SELECT a FROM Attendance AS a WHERE a.attendanceDate = : " + JPQL_PARM_DATE;
 
 }
