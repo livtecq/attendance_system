@@ -46,10 +46,10 @@ public enum AttributeConst {
     ATTENDANCES("attendances"),
     ATT_COUNT("attendances_count"),
     ATT_ID("id"),
-    ATT_DATE("time_in"),
-    ATT_TITLE("time_out"),
-    ATT_BODY("body_temperature"),
-    ATT_CONTENT("content");
+    ATT_DATE("attendance_date"),
+    ATT_IN("time_in"),
+    ATT_OUT("time_out"),
+    ATT_BODY("body_temperature");
 
     private final String text;
     private final Integer i;

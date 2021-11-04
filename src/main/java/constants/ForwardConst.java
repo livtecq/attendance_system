@@ -23,6 +23,8 @@ public enum ForwardConst {
     CMD_LOGOUT("logout"),
     CMD_NEW("entryNew"),
     CMD_CREATE("create"),
+    CMD_TIMEOUT("timeOut"),
+    CMD_BODYTEMPERATURE("bodyTemperature"),
     CMD_EDIT("edit"),
     CMD_UPDATE("update"),
     CMD_DESTROY("destroy"),
@@ -36,6 +38,7 @@ public enum ForwardConst {
     FW_EMP_NEW("employees/new"),
     FW_EMP_EDIT("employees/edit"),
     FW_ATT_INDEX("attendances/index"),
+    FW_ATT_SHOW("attendances/show"),
     FW_ATT_EDIT("attendances/edit");
 
     /**
