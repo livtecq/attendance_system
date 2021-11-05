@@ -1,5 +1,6 @@
 package services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -80,6 +81,27 @@ public class AttendanceService extends ServiceBase {
     }
 
     /**
+     * 現在の日付を条件に取得したデータをAttendanceViewのインスタンスで返却する
+     * @param date 日付
+     * @return 取得データのインスタンス
+     */
+    public AttendanceView findDate(LocalDate attendanceDate) {
+        Attendance attendances = em.createNamedQuery(JpaConst.Q_ATT_GET_DATE, Attendance.class)
+                .setParameter(JpaConst.JPQL_PARM_DATE, attendanceDate)
+                .getSingleResult();
+        return AttendanceConverter.toView(attendances);
+    }
+
+//  /**
+//  * 現在の日付を条件に取得したデータをAttendanceViewのインスタンスで返却する
+//  * @param date 日付
+//  * @return 取得データのインスタンス
+//  */
+// public AttendanceView getALLdate(LocalDate attendanceDate) {
+//     return AttendanceConverter.toView(findDateInternal(attendanceDate));
+// }
+
+    /**
      * 画面から入力された勤怠の登録内容を元にデータを1件作成し、勤怠テーブルに登録する
      * @param av 勤怠の登録内容
      * @return バリデーションで発生したエラーのリスト
@@ -128,6 +150,15 @@ public class AttendanceService extends ServiceBase {
     private Attendance findOneInternal(int id) {
         return em.find(Attendance.class, id);
     }
+
+//    /**
+//     * 現在の日付を条件にデータを1件取得する
+//     * @param date 日付
+//     * @return 取得データのインスタンス
+//     */
+//    private Attendance findDateInternal(LocalDate attendanceDate) {
+//        return em.find(Attendance.class, attendanceDate);
+//    }
 
     /**
      * 勤怠データを1件登録する
