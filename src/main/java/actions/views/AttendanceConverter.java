@@ -24,7 +24,6 @@ public class AttendanceConverter {
                 av.getBodyTemperature(),
                 av.getTimeIn(),
                 av.getTimeOut(),
-                av.getContent(),
                 av.getCreatedAt(),
                 av.getUpdatedAt());
     }
@@ -47,7 +46,6 @@ public class AttendanceConverter {
                 a.getBodyTemperature(),
                 a.getTimeIn(),
                 a.getTimeOut(),
-                a.getContent(),
                 a.getCreatedAt(),
                 a.getUpdatedAt());
     }
@@ -79,7 +77,6 @@ public class AttendanceConverter {
         a.setBodyTemperature(av.getBodyTemperature());
         a.setTimeIn(av.getTimeIn());
         a.setTimeOut(av.getTimeOut());
-        a.setContent(av.getContent());
         a.setCreatedAt(av.getCreatedAt());
         a.setUpdatedAt(av.getUpdatedAt());
 
