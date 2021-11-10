@@ -194,7 +194,7 @@ public abstract class ActionBase {
      */
     protected LocalTime toLocalTime(String strTime) {
         if (strTime == null || strTime.equals("")) {
-            return LocalTime.now();
+            return null;
         }
         return LocalTime.parse(strTime);
     }
