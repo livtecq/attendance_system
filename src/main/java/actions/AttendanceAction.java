@@ -13,6 +13,7 @@ import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
+import models.validators.TopValidator;
 import services.AttendanceService;
 
 /**
@@ -72,7 +73,7 @@ public class AttendanceAction extends ActionBase {
      * @throws IOException
      */
     public void create() throws ServletException, IOException {
-
+          System.out.println("テスト");
 
         //CSRF対策 tokenのチェック
         if (checkToken()) {
@@ -84,12 +85,30 @@ public class AttendanceAction extends ActionBase {
             //出勤打刻で現在時間を設定
             LocalTime timein = LocalTime.now();
 
+            //現在の日付を条件に勤怠データを取得する
+            AttendanceView av = service.findDate(day);
+            if(av != null) {
+
+                //登録中にエラーがあった場合
+                List<String> errors = TopValidator.validate(av);
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.ATTENDANCE, av);//入力された勤怠情報
+                putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
+
+                //TOP画面を再表示
+                forward(ForwardConst.FW_TOP_INDEX);
+
+                return ;
+
+            }
+
 
             //セッションからログイン中の従業員情報を取得
             EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
             //パラメータの値をもとに勤怠情報のインスタンスを作成する
-            AttendanceView av = new AttendanceView(
+            av = new AttendanceView(
                     null,
                     ev, //ログインしている従業員を、勤怠作成者として登録する
                     day,
@@ -140,6 +159,23 @@ public class AttendanceAction extends ActionBase {
             //現在の日付を条件に勤怠データを取得する
             AttendanceView av = service.findDate(day);
 
+            if(av.getTimeOut() != null) {
+
+                //登録中にエラーがあった場合
+                List<String> errors = service.update(av);
+                errors.add("本日の退勤時間は登録されています。");
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.ATTENDANCE, av);//入力された勤怠情報
+                putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
+
+                //TOP画面を再表示
+                forward(ForwardConst.FW_TOP_INDEX);
+
+                return ;
+
+            }
+
             //退勤打刻で現在時間を設定
             LocalTime timeout = LocalTime.now();
 
@@ -187,6 +223,23 @@ public class AttendanceAction extends ActionBase {
 
             //現在の日付を条件に勤怠データを取得する
             AttendanceView av = service.findDate(day);
+
+            if(av.getBodyTemperature() != null) {
+
+                //登録中にエラーがあった場合
+                List<String> errors = service.update(av);
+                errors.add("本日の体温は登録されています。");
+
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
+                putRequestScope(AttributeConst.ATTENDANCE, av);//入力された勤怠情報
+                putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
+
+                //TOP画面を再表示
+                forward(ForwardConst.FW_TOP_INDEX);
+
+                return ;
+
+            }
 
             //入力された体温を設定する
             av.setBodyTemperature(getRequestParam(AttributeConst.ATT_BODY));
