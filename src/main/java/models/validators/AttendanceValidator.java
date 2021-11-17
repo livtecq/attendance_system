@@ -18,46 +18,66 @@ public class AttendanceValidator {
     public static List<String> validate(AttendanceView av) {
         List<String> errors = new ArrayList<String>();
 
-        // //タイトルのチェック
-        // String titleError = validateTitle(av.getTitle());
-        // if (!titleError.equals("")) {
-        //     errors.add(titleError);
-        // }
+//         //出勤のチェック
+//         String timeInError = validateTimeIn(av.getTimeIn());
+//         if (!timeInError.equals("")) {
+//             errors.add(timeInError);
+//         }
 
-        // //内容のチェック
-        // String contentError = validateContent(av.getContent());
-        // if (!contentError.equals("")) {
-        //     errors.add(contentError);
-        // }
+//         //退勤のチェック
+//         String timeOutError = validateTimeOut(av.getTimeOut());
+//         if (!timeOutError.equals("")) {
+//             errors.add(timeOutError);
+//         }
+//
+//         //体温のチェック
+//         String bodyTemperatureError = validateBodyTemperature(av.getBodyTemperature());
+//         if (!bodyTemperatureError.equals("")) {
+//             errors.add(bodyTemperatureError);
+//         }
 
         return errors;
     }
 
-    // /**
-    //  * タイトルに入力値があるかをチェックし、入力値がなければエラーメッセージを返却
-    //  * @param title タイトル
-    //  * @return エラーメッセージ
-    //  */
-    // private static String validateTitle(String title) {
-    //     if (title == null || title.equals("")) {
-    //         return MessageConst.E_NOTITLE.getMessage();
-    //     }
+//    /**
+//     * 本日の出勤があるかをチェックし、登録があればエラーメッセージを返却
+//     * @param timeIn 出勤
+//     * @return エラーメッセージ
+//     */
+//    private static String validateTimeIn(LocalTime timeIn) {
+//        if (timeIn != null) {
+//            return MessageConst.E_NOTIMEIN.getMessage();
+//        }
+//
+//        //入力値がある場合は空文字を返却
+//        return "";
+//    }
 
-    //     //入力値がある場合は空文字を返却
-    //     return "";
-    // }
-
-    // /**
-    //  * 内容に入力値があるかをチェックし、入力値がなければエラーメッセージを返却
-    //  * @param content 内容
-    //  * @return エラーメッセージ
-    //  */
-    // private static String validateContent(String content) {
-    //     if (content == null || content.equals("")) {
-    //         return MessageConst.E_NOCONTENT.getMessage();
-    //     }
-
-    //     //入力値がある場合は空文字を返却
-    //     return "";
-    // }
+//     /**
+//      * 退勤に入力値があるかをチェックし、入力値がなければエラーメッセージを返却
+//      * @param timeOut 退勤
+//      * @return エラーメッセージ
+//      */
+//     private static String validateTimeOut(LocalTime timeOut) {
+//         if (timeOut == null) {
+//             return MessageConst.E_NOTIMEOUT.getMessage();
+//         }
+//
+//         //入力値がある場合は空文字を返却
+//         return "";
+//     }
+//
+//     /**
+//      * 体温に入力値があるかをチェックし、入力値がなければエラーメッセージを返却
+//      * @param bodyTemperature 体温
+//      * @return エラーメッセージ
+//      */
+//     private static String validateBodyTemperature(String bodyTemperature) {
+//         if (bodyTemperature == null || bodyTemperature.equals("")) {
+//             return MessageConst.E_NOBODY.getMessage();
+//         }
+//
+//         //入力値がある場合は空文字を返却
+//         return "";
+//     }
 }

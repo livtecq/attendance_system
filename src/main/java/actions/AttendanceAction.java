@@ -162,8 +162,7 @@ public class AttendanceAction extends ActionBase {
             if(av.getTimeOut() != null) {
 
                 //登録中にエラーがあった場合
-                List<String> errors = service.update(av);
-                errors.add("本日の退勤時間は登録されています。");
+                List<String> errors = TopValidator.validate(av);
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
                 putRequestScope(AttributeConst.ATTENDANCE, av);//入力された勤怠情報
@@ -227,8 +226,7 @@ public class AttendanceAction extends ActionBase {
             if(av.getBodyTemperature() != null) {
 
                 //登録中にエラーがあった場合
-                List<String> errors = service.update(av);
-                errors.add("本日の体温は登録されています。");
+                List<String> errors = TopValidator.validate(av);
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
                 putRequestScope(AttributeConst.ATTENDANCE, av);//入力された勤怠情報

@@ -10,15 +10,7 @@
 <c:set var="commOut" value="${ForwardConst.CMD_TIMEOUT.getValue()}" />
 <c:set var="commBody" value="${ForwardConst.CMD_BODYTEMPERATURE.getValue()}" />
 
-<c:if test="${errors != null}">
-    <div id="flush_error">
-        入力内容にエラーがあります。<br />
-        <c:forEach var="error" items="${errors}">
-            ・<c:out value="${error}" /><br />
-        </c:forEach>
 
-    </div>
-</c:if>
 
 <c:import url="../layout/app.jsp">
     <c:param name="content">
@@ -27,6 +19,14 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
+<c:if test="${errors != null}">
+    <div id="flush_error">
+        入力内容にエラーがあります。<br />
+        <c:forEach var="error" items="${errors}">
+            ・<c:out value="${error}" /><br />
+        </c:forEach>
+    </div>
+</c:if>
 
         <h2>勤怠管理システムへようこそ</h2>
 
