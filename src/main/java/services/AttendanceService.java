@@ -86,10 +86,14 @@ public class AttendanceService extends ServiceBase {
      * @return 取得データのインスタンス
      */
     public AttendanceView findDate(LocalDate attendanceDate) {
-        Attendance attendances = em.createNamedQuery(JpaConst.Q_ATT_GET_DATE, Attendance.class)
+        List <Attendance> attendances = em.createNamedQuery(JpaConst.Q_ATT_GET_DATE, Attendance.class)
                 .setParameter(JpaConst.JPQL_PARM_DATE, attendanceDate)
-                .getSingleResult();
-        return AttendanceConverter.toView(attendances);
+                .getResultList();
+                if(attendances.isEmpty()) {
+                    return null;
+                }
+                Attendance attendance = attendances.get(0);
+        return AttendanceConverter.toView(attendance);
     }
 
 //  /**
@@ -141,6 +145,52 @@ public class AttendanceService extends ServiceBase {
         //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
         return errors;
     }
+
+//    /**
+//     * トップ画面から退勤ボタンを押したときに、勤怠データを更新する
+//     * @param av 勤怠の更新内容
+//     * @return バリデーションで発生したエラーのリスト
+//     */
+//    public List<String> timeOut(AttendanceView av) {
+//
+//        //バリデーションを行う
+//        List<String> errors = AttendanceValidator.validate(av);
+//
+//        if (errors.size() == 0) {
+//
+//            //更新日時を現在時刻に設定
+//            LocalDateTime ldt = LocalDateTime.now();
+//            av.setUpdatedAt(ldt);
+//
+//            updateInternal(av);
+//        }
+//
+//        //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
+//        return errors;
+//    }
+
+//    /**
+//     * トップ画面から入力された体温を更新する
+//     * @param av 勤怠の更新内容
+//     * @return バリデーションで発生したエラーのリスト
+//     */
+//    public List<String> bodyTemperature(AttendanceView av) {
+//
+//        //バリデーションを行う
+//        List<String> errors = AttendanceValidator.validate(av);
+//
+//        if (errors.size() == 0) {
+//
+//            //更新日時を現在時刻に設定
+//            LocalDateTime ldt = LocalDateTime.now();
+//            av.setUpdatedAt(ldt);
+//
+//            updateInternal(av);
+//        }
+//
+//        //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
+//        return errors;
+//    }
 
     /**
      * idを条件にデータを1件取得する
