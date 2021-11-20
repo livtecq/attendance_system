@@ -96,31 +96,18 @@ public class AttendanceService extends ServiceBase {
         return AttendanceConverter.toView(attendance);
     }
 
-//  /**
-//  * 現在の日付を条件に取得したデータをAttendanceViewのインスタンスで返却する
-//  * @param date 日付
-//  * @return 取得データのインスタンス
-//  */
-// public AttendanceView getALLdate(LocalDate attendanceDate) {
-//     return AttendanceConverter.toView(findDateInternal(attendanceDate));
-// }
-
     /**
      * 画面から入力された勤怠の登録内容を元にデータを1件作成し、勤怠テーブルに登録する
      * @param av 勤怠の登録内容
      * @return バリデーションで発生したエラーのリスト
      */
-    public List<String> create(AttendanceView av) {
-        List<String> errors = AttendanceValidator.validate(av);
-        if (errors.size() == 0) {
+    public void create(AttendanceView av) {
+
             LocalDateTime ldt = LocalDateTime.now();
             av.setCreatedAt(ldt);
             av.setUpdatedAt(ldt);
             createInternal(av);
-        }
 
-        //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
-        return errors;
     }
 
     /**
@@ -146,51 +133,19 @@ public class AttendanceService extends ServiceBase {
         return errors;
     }
 
-//    /**
-//     * トップ画面から退勤ボタンを押したときに、勤怠データを更新する
-//     * @param av 勤怠の更新内容
-//     * @return バリデーションで発生したエラーのリスト
-//     */
-//    public List<String> timeOut(AttendanceView av) {
-//
-//        //バリデーションを行う
-//        List<String> errors = AttendanceValidator.validate(av);
-//
-//        if (errors.size() == 0) {
-//
-//            //更新日時を現在時刻に設定
-//            LocalDateTime ldt = LocalDateTime.now();
-//            av.setUpdatedAt(ldt);
-//
-//            updateInternal(av);
-//        }
-//
-//        //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
-//        return errors;
-//    }
+    /**
+     * 編集画面から入力された勤怠の登録内容を元に、勤怠データを更新する
+     * @param av 勤怠の更新内容
+     * @return バリデーションで発生したエラーのリスト
+     */
+    public void topUpdate(AttendanceView av) {
 
-//    /**
-//     * トップ画面から入力された体温を更新する
-//     * @param av 勤怠の更新内容
-//     * @return バリデーションで発生したエラーのリスト
-//     */
-//    public List<String> bodyTemperature(AttendanceView av) {
-//
-//        //バリデーションを行う
-//        List<String> errors = AttendanceValidator.validate(av);
-//
-//        if (errors.size() == 0) {
-//
-//            //更新日時を現在時刻に設定
-//            LocalDateTime ldt = LocalDateTime.now();
-//            av.setUpdatedAt(ldt);
-//
-//            updateInternal(av);
-//        }
-//
-//        //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
-//        return errors;
-//    }
+            //更新日時を現在時刻に設定
+            LocalDateTime ldt = LocalDateTime.now();
+            av.setUpdatedAt(ldt);
+
+            updateInternal(av);
+    }
 
     /**
      * idを条件にデータを1件取得する
@@ -200,15 +155,6 @@ public class AttendanceService extends ServiceBase {
     private Attendance findOneInternal(int id) {
         return em.find(Attendance.class, id);
     }
-
-//    /**
-//     * 現在の日付を条件にデータを1件取得する
-//     * @param date 日付
-//     * @return 取得データのインスタンス
-//     */
-//    private Attendance findDateInternal(LocalDate attendanceDate) {
-//        return em.find(Attendance.class, attendanceDate);
-//    }
 
     /**
      * 勤怠データを1件登録する

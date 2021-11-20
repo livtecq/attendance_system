@@ -13,31 +13,74 @@ import constants.MessageConst;
 public class TopValidator {
 
     /**
+     * 出勤インスタンスの各項目についてバリデーションを行う
+     * @param av 勤怠インスタンス
+     * @return エラーのリスト
+     */
+    public static List<String> validateTimeIn(AttendanceView av) {
+
+        if(av != null) {
+
+            List<String> errors = new ArrayList<String>();
+
+            //出勤のチェック
+            String timeInError = validateTimeIn(av.getTimeIn());
+            if (!timeInError.equals("")) {
+                errors.add(timeInError);
+            }
+
+           return errors;
+        }
+        return null;
+    }
+
+    /**
      * 勤怠インスタンスの各項目についてバリデーションを行う
      * @param av 勤怠インスタンス
      * @return エラーのリスト
      */
-    public static List<String> validate(AttendanceView av) {
+    public static List<String> validateTimeOut(AttendanceView av) {
+
         List<String> errors = new ArrayList<String>();
 
-         //出勤のチェック
-         String timeInError = validateTimeIn(av.getTimeIn());
-         if (!timeInError.equals("")) {
-             errors.add(timeInError);
-         }
+        if(av == null) {
 
-         //退勤のチェック
-         String timeOutError = validateTimeOut(av.getTimeOut());
-         if (!timeOutError.equals("")) {
-             errors.add(timeOutError);
-         }
+            errors.add(MessageConst.E_NOTIMEINNULL.getMessage());
 
-         //体温のチェック
-         String bodyTemperatureError = validateBodyTemperature(av.getBodyTemperature());
-         if (!bodyTemperatureError.equals("")) {
-             errors.add(bodyTemperatureError);
-         }
 
+        }else if(av.getTimeOut() != null) {
+
+            //退勤のチェック
+            String timeOutError = validateTimeOut(av.getTimeOut());
+            if (!timeOutError.equals("")) {
+                errors.add(timeOutError);
+            }
+        }
+        return errors;
+    }
+
+    /**
+     * 勤怠インスタンスの各項目についてバリデーションを行う
+     * @param av 勤怠インスタンス
+     * @return エラーのリスト
+     */
+    public static List<String> validateBody(AttendanceView av) {
+
+        List<String> errors = new ArrayList<String>();
+
+        if(av == null) {
+
+            errors.add(MessageConst.E_NOTIMEINNULL.getMessage());
+
+
+        }else if(av.getBodyTemperature() != null) {
+
+            //体温のチェック
+            String bodyTemperatureError = validateBodyTemperature(av.getBodyTemperature());
+            if (!bodyTemperatureError.equals("")) {
+                errors.add(bodyTemperatureError);
+            }
+        }
         return errors;
     }
 

@@ -23,8 +23,11 @@ public enum MessageConst {
     E_EMP_CODE_EXIST("入力された社員番号の情報は既に存在しています。"),
     E_NOTITLE("タイトルを入力してください。"),
     E_NOTIMEIN("本日の出勤時刻は登録済です。"),
+    E_NOTIMEINNULL("本日の出勤時刻が未登録です。"),
     E_NOTIMEOUT("本日の退勤時刻は登録済みです。"),
     E_NOBODY("本日の体温は入力済みです。"),
+    E_NOTIMEINUP("出勤時刻が入力されていません。"),
+    E_NOTIMEOUTUP("退勤時刻が入力されていません。"),
     E_NOCONTENT("内容を入力してください。");
 
 

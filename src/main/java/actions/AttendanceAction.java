@@ -73,7 +73,6 @@ public class AttendanceAction extends ActionBase {
      * @throws IOException
      */
     public void create() throws ServletException, IOException {
-          System.out.println("テスト");
 
         //CSRF対策 tokenのチェック
         if (checkToken()) {
@@ -87,10 +86,12 @@ public class AttendanceAction extends ActionBase {
 
             //現在の日付を条件に勤怠データを取得する
             AttendanceView av = service.findDate(day);
-            if(av != null) {
 
-                //登録中にエラーがあった場合
-                List<String> errors = TopValidator.validate(av);
+            //登録中にエラーがあった場合
+            List<String> errors = TopValidator.validateTimeIn(av);
+
+            if(errors != null) {
+
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
                 putRequestScope(AttributeConst.ATTENDANCE, av);//入力された勤怠情報
@@ -119,29 +120,16 @@ public class AttendanceAction extends ActionBase {
                     null);
 
             //勤怠情報登録
-            List<String> errors = service.create(av);
+            service.create(av);
 
-            if (errors.size() > 0) {
-                //登録中にエラーがあった場合
+            //セッションに登録完了のフラッシュメッセージを設定
+            putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
 
-                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-                putRequestScope(AttributeConst.ATTENDANCE, av);//入力された勤怠情報
-                putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
-
-                //TOP画面を再表示
-                forward(ForwardConst.FW_TOP_INDEX);
-
-            } else {
-                //登録中にエラーがなかった場合
-
-                //セッションに登録完了のフラッシュメッセージを設定
-                putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
-
-                //一覧画面にリダイレクト
-                redirect(ForwardConst.ACT_ATT, ForwardConst.CMD_INDEX);
+            //一覧画面にリダイレクト
+            redirect(ForwardConst.ACT_ATT, ForwardConst.CMD_INDEX);
             }
-        }
-    }
+     }
+
 
     /**
      * 退勤時間を登録する
@@ -159,10 +147,12 @@ public class AttendanceAction extends ActionBase {
             //現在の日付を条件に勤怠データを取得する
             AttendanceView av = service.findDate(day);
 
-            if(av.getTimeOut() != null) {
+            //登録中にエラーがあった場合
+            List<String> errors = TopValidator.validateTimeOut(av);
 
-                //登録中にエラーがあった場合
-                List<String> errors = TopValidator.validate(av);
+            if(errors.size() > 0) {
+
+
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
                 putRequestScope(AttributeConst.ATTENDANCE, av);//入力された勤怠情報
@@ -182,29 +172,16 @@ public class AttendanceAction extends ActionBase {
             av.setTimeOut(timeout);
 
             //勤怠データを更新する
-            List<String> errors = service.update(av);
+            service.topUpdate(av);
 
+            //セッションに更新完了のフラッシュメッセージを設定
+            putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
 
-            if (errors.size() > 0) {
-                //更新中にエラーが発生した場合
-
-                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-                putRequestScope(AttributeConst.ATTENDANCE, av); //入力された商談情報
-                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
-
-                //TOP画面を再表示
-                forward(ForwardConst.FW_TOP_INDEX);
-            } else {
-                //更新中にエラーがなかった場合
-
-                //セッションに更新完了のフラッシュメッセージを設定
-                putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
-
-                //一覧画面にリダイレクト
-                redirect(ForwardConst.ACT_ATT, ForwardConst.CMD_INDEX);
+            //一覧画面にリダイレクト
+            redirect(ForwardConst.ACT_ATT, ForwardConst.CMD_INDEX);
 
             }
-        }
+
     }
 
     /**
@@ -223,10 +200,12 @@ public class AttendanceAction extends ActionBase {
             //現在の日付を条件に勤怠データを取得する
             AttendanceView av = service.findDate(day);
 
-            if(av.getBodyTemperature() != null) {
+          //登録中にエラーがあった場合
+            List<String> errors = TopValidator.validateBody(av);
 
-                //登録中にエラーがあった場合
-                List<String> errors = TopValidator.validate(av);
+            if(errors.size() > 0) {
+
+
 
                 putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
                 putRequestScope(AttributeConst.ATTENDANCE, av);//入力された勤怠情報
@@ -243,29 +222,16 @@ public class AttendanceAction extends ActionBase {
             av.setBodyTemperature(getRequestParam(AttributeConst.ATT_BODY));
 
             //勤怠データを更新する
-            List<String> errors = service.update(av);
+            service.topUpdate(av);
 
+            //セッションに更新完了のフラッシュメッセージを設定
+            putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
 
-            if (errors.size() > 0) {
-                //更新中にエラーが発生した場合
-
-                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
-                putRequestScope(AttributeConst.ATTENDANCE, av); //入力された商談情報
-                putRequestScope(AttributeConst.ERR, errors); //エラーのリスト
-
-                //TOP画面を再表示
-                forward(ForwardConst.FW_TOP_INDEX);
-            } else {
-                //更新中にエラーがなかった場合
-
-                //セッションに更新完了のフラッシュメッセージを設定
-                putSessionScope(AttributeConst.FLUSH, MessageConst.I_UPDATED.getMessage());
-
-                //一覧画面にリダイレクト
-                redirect(ForwardConst.ACT_ATT, ForwardConst.CMD_INDEX);
+            //一覧画面にリダイレクト
+            redirect(ForwardConst.ACT_ATT, ForwardConst.CMD_INDEX);
 
             }
-        }
+
     }
 
     /**
